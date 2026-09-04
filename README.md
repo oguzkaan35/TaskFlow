@@ -149,3 +149,51 @@ API endpointleri JWT ile korunmaktadır.
 
 ```text
 POST /api/TaskItems
+
+yalnızca Admin tarafından kullanılabilir.
+
+Normal kullanıcıların görev durumlarını değiştirmesi için ayrı endpoint kullanılmaktadır:
+
+```text
+PUT /api/TaskItems/{id}/status
+```
+
+Bu endpoint kullanıcının JWT içerisindeki kimliğini kontrol eder ve yalnızca kendisine atanmış görev üzerinde işlem yapmasına izin verir.
+
+---
+
+## ⚙️ Kurulum
+
+Projeyi klonlayın:
+
+```bash
+git clone <repository-url>
+```
+
+SQL Server üzerinde `TaskFlow` veritabanını oluşturun ve bağlantı bilgisini `appsettings.json` içerisinde yapılandırın.
+
+JWT anahtarını kaynak kod içerisinde saklamak yerine .NET User Secrets kullanın:
+
+```bash
+dotnet user-secrets set "Jwt:Key" "YOUR_SECRET_KEY"
+```
+
+Ardından projeyi Visual Studio üzerinden çalıştırabilirsiniz.
+
+API:
+
+```text
+https://localhost:7000
+```
+
+Web:
+
+```text
+https://localhost:7158
+```
+
+---
+
+## 🎯 Proje Amacı
+
+Bu proje; ASP.NET Core Web API, MVC, Entity Framework Core, SQL Server, JWT Authentication, rol bazlı yetkilendirme ve katmanlı mimari konularında pratik yapmak amacıyla geliştirilmiştir.
