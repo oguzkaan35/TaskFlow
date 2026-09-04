@@ -1,0 +1,115 @@
+﻿@model List<TaskFlow.Web.Models.ProjectListViewModel>
+
+@{
+    ViewData["Title"] = "Projeler";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Projeler</h2>
+            <p class="text-muted">
+                Sistemdeki projeleri görüntüleyebilirsiniz.
+            </p>
+        </div>
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="btn btn-secondary">
+            Admin Paneline Dön
+        </a>
+
+        <a asp-controller="Admin"
+           asp-action="CreateProject"
+           class="btn btn-success">
+            + Yeni Proje
+        </a>
+
+    </div>
+
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="alert alert-info">
+            Sistemde proje bulunmuyor.
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Proje Adı</th>
+                            <th>Açıklama</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var project in Model)
+                        {
+                            <tr>
+                                <td>@project.Id</td>
+                                <td>
+                                    <strong>@project.ProjectName</strong>
+                                </td>
+                                <td>@project.Description</td>
+                                <td>
+                                    <a asp-controller="Admin"
+                                       asp-action="EditProject"
+                                       asp-route-id="@project.Id"
+                                       class="btn btn-warning btn-sm">
+                                        Düzenle
+                                    </a>
+
+                                    <form asp-controller="Admin"
+                                          asp-action="DeleteProject"
+                                          method="post"
+                                          class="d-inline">
+
+                                        <input type="hidden"
+                                               name="id"
+                                               value="@project.Id" />
+
+                                        <button type="submit"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Bu projeyi silmek istediğinize emin misiniz?');">
+                                            Sil
+                                        </button>
+
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    }
+
+</div>

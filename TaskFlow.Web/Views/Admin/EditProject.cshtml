@@ -1,0 +1,72 @@
+﻿@model TaskFlow.Web.Models.UpdateProjectViewModel
+
+
+
+@{
+    ViewData["Title"] = "Proje Düzenle";
+}
+
+
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+
+
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+
+                    <h2 class="mb-4">Proje Düzenle</h2>
+
+                    <form asp-controller="Admin"
+                          asp-action="EditProject"
+                          method="post">
+
+                        <input asp-for="Id" type="hidden" />
+
+                        <div class="mb-3">
+                            <label asp-for="ProjectName"
+                                   class="form-label">
+                                Proje Adı
+                            </label>
+
+                            <input asp-for="ProjectName"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ProjectName"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description"
+                                   class="form-label">
+                                Açıklama
+                            </label>
+
+                            <textarea asp-for="Description"
+                                      class="form-control"
+                                      rows="4"></textarea>
+                        </div>
+
+                        <button type="submit"
+                                class="btn btn-warning">
+                            Değişiklikleri Kaydet
+                        </button>
+
+                        <a asp-controller="Admin"
+                           asp-action="Projects"
+                           class="btn btn-secondary">
+                            İptal
+                        </a>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

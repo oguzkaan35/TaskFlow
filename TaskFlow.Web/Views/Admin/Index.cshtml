@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Admin Paneli";
+}
+
+<div class="container mt-4">
+
+    <div class="mb-4">
+        <h2>TaskFlow Admin Paneli</h2>
+        <p class="text-muted">
+            Projeleri, kullanıcıları ve görevleri buradan yönetebilirsiniz.
+        </p>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h4>📁 Projeler</h4>
+
+                    <p class="text-muted">
+                        Projeleri görüntüleyin ve yönetin.
+                    </p>
+
+                    <a asp-controller="Admin"
+                       asp-action="Projects"
+                       class="btn btn-primary">
+                        Projelere Git
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h4>👥 Kullanıcılar</h4>
+
+                    <p class="text-muted">
+                        Sistemdeki kullanıcıları yönetin.
+                    </p>
+
+                    <a asp-controller="Admin"
+                       asp-action="Users"
+                       class="btn btn-primary">
+                        Kullanıcılara Git
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h4>✅ Görevler</h4>
+
+                    <p class="text-muted">
+                        Görevleri görüntüleyin ve kullanıcılara yeni görevler atayın.
+                    </p>
+
+                    <div class="d-flex gap-2">
+
+                        <a asp-controller="Admin"
+                           asp-action="AssignTask"
+                           class="btn btn-success">
+                            Görev Ata
+                        </a>
+
+                        <a asp-controller="Admin"
+                           asp-action="AllTasks"
+                           class="btn btn-primary">
+                            Tüm Görevler
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

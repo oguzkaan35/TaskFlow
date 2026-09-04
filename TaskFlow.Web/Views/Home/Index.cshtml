@@ -1,0 +1,288 @@
+﻿@model TaskFlow.Web.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<div class="container mt-4">
+
+    <div class="mb-4">
+        <h2>Hoş Geldin, @Model.Username 👋</h2>
+
+        @if (Model.IsAdmin)
+        {
+            <p class="text-muted">
+                TaskFlow sisteminin genel durumunu buradan takip edebilirsin.
+            </p>
+        }
+        else
+        {
+            <p class="text-muted">
+                Görevlerinin genel durumunu buradan takip edebilirsin.
+            </p>
+        }
+    </div>
+
+
+    @* --------------------------- ADMIN DASHBOARD ---------------------- *@
+
+    @if (Model.IsAdmin)
+    {
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Toplam Kullanıcı</h6>
+                        <h2 class="mb-0">@Model.TotalUsers</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Toplam Proje</h6>
+                        <h2 class="mb-0">@Model.TotalProjects</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Toplam Görev</h6>
+                        <h2 class="mb-0">@Model.TotalSystemTasks</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Tamamlanan Görev</h6>
+                        <h2 class="mb-0">@Model.TotalCompletedSystemTasks</h2>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <h5>Yönetim İşlemleri</h5>
+
+                <p class="text-muted">
+                    Projeleri, kullanıcıları ve görevleri yönetmek için
+                    Admin Paneline gidebilirsin.
+                </p>
+
+                <a asp-controller="Admin"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    Admin Paneline Git
+                </a>
+
+            </div>
+        </div>
+    }
+
+
+    @* ===================== KULLANICI DASHBOARD ===================== *@
+
+
+    else
+    {
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Toplam Görev</h6>
+                        <h2 class="mb-0">@Model.TotalTasks</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Bekleyen</h6>
+                        <h2 class="mb-0">@Model.PendingTasks</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Devam Eden</h6>
+                        <h2 class="mb-0">@Model.InProgressTasks</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Tamamlanan</h6>
+                        <h2 class="mb-0">@Model.CompletedTasks</h2>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Teslimi Yaklaşan Görevler</h5>
+            </div>
+
+            <div class="card-body">
+
+                @if (Model.UpcomingTasks.Count == 0)
+                {
+                    <p class="text-muted mb-0">
+                        Teslimi yaklaşan görev bulunmuyor.
+                    </p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+
+
+                        <style>
+                            .dashboard-table {
+                                width: 100%;
+                            }
+
+                                .dashboard-table thead tr {
+                                    border-bottom: 1px solid #212529;
+                                }
+
+                                .dashboard-table thead th {
+                                    border-bottom: none !important;
+                                }
+                        </style>
+
+                        <table class="table table-hover align-middle dashboard-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Görev</th>
+                                    <th>Proje</th>
+                                    <th>Öncelik</th>
+                                    <th>Durum</th>
+                                    <th>Son Tarih</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var task in Model.UpcomingTasks)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            <strong>@task.Title</strong>
+                                        </td>
+
+                                        <td>
+                                            @task.ProjectName
+                                        </td>
+
+                                        <td>
+                                            @task.Priority
+                                        </td>
+
+                                        <td>
+
+                                            @if (task.StatusId == 1)
+                                            {
+                                                <span class="badge bg-secondary">
+                                                    Bekliyor
+                                                </span>
+                                            }
+                                            else if (task.StatusId == 2)
+                                            {
+                                                <span class="badge bg-warning text-dark">
+                                                    Devam Ediyor
+                                                </span>
+                                            }
+                                            else if (task.StatusId == 3)
+                                            {
+                                                <span class="badge bg-success">
+                                                    Tamamlandı
+                                                </span>
+                                            }
+
+                                        </td>
+
+                                        
+                                        <td>
+                                            @if (task.DueDate.HasValue)
+                                            {
+                                                var today = DateTime.Today;
+                                                var dueDate = task.DueDate.Value.Date;
+                                                var days = (dueDate - today).Days;
+
+                                                <div>
+                                                    @task.DueDate.Value.ToString("dd.MM.yyyy")
+                                                </div>
+
+                                                @if (days < 0)
+                                                {
+                                                    <span class="badge bg-danger">
+                                                        @Math.Abs(days) gün gecikti
+                                                    </span>
+                                                }
+                                                else if (days == 0)
+                                                {
+                                                    <span class="badge bg-danger">
+                                                        Bugün
+                                                    </span>
+                                                }
+                                                else if (days == 1)
+                                                {
+                                                    <span class="badge bg-warning text-dark">
+                                                        Yarın
+                                                    </span>
+                                                }
+                                                else if (days <= 3)
+                                                {
+                                                    <span class="badge bg-warning text-dark">
+                                                        @days gün kaldı
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-info text-dark">
+                                                        @days gün kaldı
+                                                    </span>
+                                                }
+                                            }
+                                        </td>
+                                        
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+    }
+
+</div>

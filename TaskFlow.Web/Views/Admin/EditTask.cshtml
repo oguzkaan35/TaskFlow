@@ -1,0 +1,105 @@
+﻿@model TaskFlow.Web.Models.UpdateTaskViewModel
+
+@{
+    ViewData["Title"] = "Görev Düzenle";
+}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Görev Düzenle</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <form asp-controller="Admin"
+                  asp-action="EditTask"
+                  method="post">
+
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label">
+                        Görev Başlığı
+                    </label>
+                    <input asp-for="Title" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">
+                        Açıklama
+                    </label>
+                    <textarea asp-for="Description"
+                              class="form-control"
+                              rows="3"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="AssignedUserId" class="form-label">
+                        Atanan Kullanıcı
+                    </label>
+
+                    <select asp-for="AssignedUserId"
+                            asp-items="Model.Users"
+                            class="form-select">
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ProjectId" class="form-label">
+                        Proje
+                    </label>
+
+                    <select asp-for="ProjectId"
+                            asp-items="Model.Projects"
+                            class="form-select">
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="StatusId" class="form-label">
+                        Durum
+                    </label>
+
+                    <select asp-for="StatusId"
+                            asp-items="Model.Statuses"
+                            class="form-select">
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Priority" class="form-label">
+                        Öncelik
+                    </label>
+
+                    <select asp-for="Priority" class="form-select">
+                        <option value="Düşük">Düşük</option>
+                        <option value="Orta">Orta</option>
+                        <option value="Yüksek">Yüksek</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DueDate" class="form-label">
+                        Son Tarih
+                    </label>
+
+                    <input asp-for="DueDate"
+                           type="datetime-local"
+                           class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Değişiklikleri Kaydet
+                </button>
+
+                <a asp-action="AllTasks"
+                   class="btn btn-secondary">
+                    Geri Dön
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
